@@ -8,13 +8,15 @@
  * React.ReactChild[];
  */
 
-type BoxProps = { children: any /* 👈 Get rid of this! */ };
+import React, { PropsWithChildren } from 'react';
 
-const Box = ({ children }: BoxProps) => {
+type BoxProps = { color?: 'red' | 'green' | 'blue' };
+
+const Box = ({ children, color }: PropsWithChildren<BoxProps>) => {
   return (
     <section
       className="m-4"
-      style={{ padding: '1em', border: '5px solid purple' }}
+      style={{ padding: '1em', border: '5px solid purple', color: color }}
     >
       {children}
     </section>
@@ -27,7 +29,7 @@ const Application = () => {
       <Box>
         Just a string.
         <p>Some HTML that is not nested.</p>
-        <Box>
+        <Box color="red">
           <h2>Another React component with one child.</h2>
         </Box>
         <Box>
