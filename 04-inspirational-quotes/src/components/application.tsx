@@ -20,23 +20,20 @@ export const fetchQuotes = async (count: number) => {
 };
 
 const Application = () => {
-  const [count, setCount] = useState(0);
+  const [quote, setQuote] = useState<Quote>();
+
+  useEffect(() => {
+    fetchRandomQuote().then(setQuote);
+  }, []);
+
   const [quotes, setQuotes] = useState<Quote[]>([]);
 
-  const handleCount = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCount(e.target.valueAsNumber);
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // fetch quotes and then console.log data return from fetchQuotes
-    const data = await fetchQuotes(count);
-    setQuotes(data);
-  };
-
+  if (!quote) return <Loading />;
   return (
     <main className="mx-auto w-full max-w-2xl py-16">
-      <Quotes count={count} onChange={handleCount} onSubmit={handleSubmit}>
+      <h2 className="mb-8 text-2xl font-bold">Inspirational Random Quote</h2>
+      <InspirationalQuote content={quote.content} source={quote.source} />
+      <Quotes setQuotes={setQuotes}>
         {quotes.map((quote) => {
           return (
             <InspirationalQuote
