@@ -1,12 +1,18 @@
-import { useState, PropsWithChildren } from 'react';
+import { useState, PropsWithChildren, useReducer, Dispatch } from 'react';
 import { fetchQuotes, Quote } from './application';
 
 type QuotesProps = {
   setQuotes: React.Dispatch<React.SetStateAction<Quote[]>>;
 };
 
+const reducer = (count: number, newValue: number): number => {
+  return newValue;
+};
+
 const Quotes = ({ children, setQuotes }: PropsWithChildren<QuotesProps>) => {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
+
+  const [count, setCount] = useReducer(reducer, 0);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     fetchQuotes(count).then(setQuotes);
