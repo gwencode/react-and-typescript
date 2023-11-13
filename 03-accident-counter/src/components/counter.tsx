@@ -6,39 +6,30 @@ const intialState = {
 };
 
 type Action = {
-  type: 'increment' | 'decrement' | 'reset' | 'update';
+  type: 'increment' | 'decrement' | 'reset' | 'updateCountFromDraft';
 };
 
 type ActionWithPayload = {
-  type: 'change';
+  type: 'updateDraftCount';
   payload: number;
 };
 
 const reducer = (state = intialState, action: Action | ActionWithPayload) => {
   const { count, draftCount } = state;
-  if (action.type === 'increment') {
-    return { count: count + 1, draftCount };
+  switch (action.type) {
+    case 'increment':
+      return { count: count + 1, draftCount };
+    case 'decrement':
+      return { count: count - 1, draftCount };
+    case 'reset':
+      return { count: 0, draftCount };
+    case 'updateCountFromDraft':
+      const newCount = draftCount;
+      return { count: newCount, draftCount: 0 };
+    case 'updateDraftCount':
+      const newDraftCount = action.payload;
+      return { count, draftCount: newDraftCount };
   }
-
-  if (action.type === 'decrement') {
-    return { count: count - 1, draftCount };
-  }
-
-  if (action.type === 'reset') {
-    return { count: 0, draftCount };
-  }
-
-  if (action.type === 'update') {
-    const newCount = draftCount;
-    return { count: newCount, draftCount: 0 };
-  }
-
-  if (action.type === 'change' && action.payload) {
-    const newDraftCount = action.payload;
-    return { count, draftCount: newDraftCount };
-  }
-
-  return state;
 };
 
 const Counter = (): JSX.Element => {
@@ -68,14 +59,17 @@ const Counter = (): JSX.Element => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            dispatch({ type: 'update' });
+            dispatch({ type: 'updateCountFromDraft' });
           }}
         >
           <input
             type="number"
             value={state.draftCount}
             onChange={(e) =>
-              dispatch({ type: 'change', payload: e.target.valueAsNumber })
+              dispatch({
+                type: 'updateDraftCount',
+                payload: e.target.valueAsNumber,
+              })
             }
           />
           <button type="submit">Update Counter</button>
