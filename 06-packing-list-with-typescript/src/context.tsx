@@ -7,12 +7,15 @@ import {
   updateItem,
 } from './lib/items';
 
+type PartialItem = Partial<Item>;
+type PartialItemWithoutId = Omit<PartialItem, 'id'>;
+
 type ItemsState = {
   items: Item[];
   unpackedItems: Item[];
   packedItems: Item[];
   add: (name: string) => void;
-  update: (id: string, updates: any) => void;
+  update: (id: string, updates: PartialItemWithoutId) => void;
   remove: (id: string) => void;
   markAllAsUnpacked: () => void;
 };
@@ -28,7 +31,7 @@ const ItemsProvider = ({ children }: PropsWithChildren) => {
     setItems([...items, item]);
   };
 
-  const update = (id: string, updates: any) => {
+  const update = (id: string, updates: PartialItemWithoutId) => {
     setItems(updateItem(items, id, updates));
   };
 
