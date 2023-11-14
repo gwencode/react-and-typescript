@@ -1,25 +1,23 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { ItemsContext } from '../context';
 
-type NewItemProps = {
-  addItem: (name: string) => void;
-};
-
-const NewItem = ({ addItem }: NewItemProps) => {
+const NewItem = () => {
   const [newItemName, setNewItemName] = useState('');
+  const { add } = useContext(ItemsContext);
 
   return (
     <form
       id="new-item"
       onSubmit={(e) => {
         e.preventDefault();
-        addItem(newItemName);
+        add(newItemName);
         setNewItemName('');
       }}
     >
       <label htmlFor="new-item-name" className="font-semibold">
         New Item Name
       </label>
-      <div className="flex my-2">
+      <div className="my-2 flex">
         <input
           id="new-item-name"
           className="w-full"
@@ -31,7 +29,7 @@ const NewItem = ({ addItem }: NewItemProps) => {
         />
         <button
           id="new-item-submit"
-          className="border-l-0 whitespace-nowrap bg-primary-300"
+          className="whitespace-nowrap border-l-0 bg-primary-300"
           aria-label={`Add ${newItemName}`}
           type="submit"
         >

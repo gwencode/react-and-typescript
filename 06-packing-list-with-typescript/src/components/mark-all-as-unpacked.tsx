@@ -1,15 +1,15 @@
-import { MouseEventHandler } from 'react';
+// import { MouseEventHandler } from 'react';
+import { useContext } from 'react';
+import { ItemsContext } from '../context';
 
-type MarkAllAsUnpackedProps = {
-  onClick: MouseEventHandler<HTMLButtonElement>;
+const MarkAllAsUnpacked = () => {
+  const { markAllAsUnpacked } = useContext(ItemsContext);
+  return (
+    <div className="mb-16">
+      <button className="w-full" onClick={markAllAsUnpacked}>
+        🏠 Mark All As Unpacked
+      </button>
+    </div>
+  );
 };
-
-const MarkAllAsUnpacked = ({ onClick }: MarkAllAsUnpackedProps) => (
-  <div className="mb-16">
-    <button className="w-full" onClick={onClick}>
-      🏠 Mark All As Unpacked
-    </button>
-  </div>
-);
-
 export default MarkAllAsUnpacked;
