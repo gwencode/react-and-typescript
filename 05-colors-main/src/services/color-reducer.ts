@@ -2,22 +2,22 @@ import { rgb, hsl } from 'color-convert';
 
 // type HexColor = `#${string}`;
 
-type colorState = {
+export type ColorState = {
   hexColor: string
 }
 
-export const initialState: colorState = {
+export const initialState: ColorState = {
   hexColor: "#BADA55"
 }
 
 type UpdateHexColor = {
   type: 'update-hex-color';
-  payload: colorState
+  payload: ColorState
 }
 
 type UpdateBtnColor = {
   type: 'update-btn-color';
-  payload: colorState
+  payload: ColorState
 }
 
 type UpdateRGBColor = {
@@ -37,9 +37,9 @@ export type UpdateColorActions =
   | UpdateHSLColor
 
 export const colorReducer = (
-  state: colorState = initialState,
+  state: ColorState = initialState,
   action: UpdateColorActions
-): colorState => {
+): ColorState => {
   switch (action.type) {
     case 'update-hex-color': {
       const { hexColor } = action.payload;
