@@ -1,4 +1,4 @@
-import { rgb } from 'color-convert';
+import { rgb, hsl } from 'color-convert';
 
 // type HexColor = `#${string}`;
 
@@ -25,7 +25,16 @@ type UpdateRGBColor = {
   payload: { rgb: [number, number, number]}
 }
 
-export type UpdateColorActions = UpdateHexColor | UpdateRGBColor | UpdateBtnColor
+type UpdateHSLColor = {
+  type: 'update-hsl-color';
+  payload: { hsl: [number, number, number]}
+}
+
+export type UpdateColorActions =
+  | UpdateHexColor
+  | UpdateRGBColor
+  | UpdateBtnColor
+  | UpdateHSLColor
 
 export const colorReducer = (
   state: colorState = initialState,
@@ -42,6 +51,10 @@ export const colorReducer = (
     }
     case 'update-btn-color': {
       const { hexColor } = action.payload;
+      return {...state, hexColor };
+    }
+    case 'update-hsl-color': {
+      const hexColor = `#${hsl.hex(action.payload.hsl)}`;
       return {...state, hexColor };
     }
     default:
