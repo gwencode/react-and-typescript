@@ -15,12 +15,14 @@ type UpdateHexColor = {
 
 type UpdateRGBColor = {
   type: 'update-rgb-color';
-  payload: { rgb : [number, number, number]}
+  payload: { rgb: [number, number, number]}
 }
+
+export type UpdateColorActions = UpdateHexColor | UpdateRGBColor
 
 export const colorReducer = (
   state: colorState = initialState,
-  action: UpdateHexColor | UpdateRGBColor
+  action: UpdateColorActions
   ): colorState => {
     switch (action.type) {
       case 'update-hex-color': {
@@ -28,7 +30,7 @@ export const colorReducer = (
         return {...state, hexColor };
       }
       case 'update-rgb-color': {
-        const hexColor = rgb.hex(action.payload.rgb);
+        const hexColor = "#" + rgb.hex(action.payload.rgb);
         return {...state, hexColor };
       }
       default:
