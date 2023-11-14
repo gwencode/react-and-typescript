@@ -1,5 +1,7 @@
 import { rgb } from 'color-convert';
 
+// type HexColor = `#${string}`;
+
 type colorState = {
   hexColor: string
 }
@@ -10,7 +12,7 @@ export const initialState: colorState = {
 
 type UpdateHexColor = {
   type: 'update-hex-color';
-  payload: {hexColor: string}
+  payload: colorState
 }
 
 type UpdateRGBColor = {
@@ -30,7 +32,7 @@ export const colorReducer = (
         return {...state, hexColor };
       }
       case 'update-rgb-color': {
-        const hexColor = "#" + rgb.hex(action.payload.rgb);
+        const hexColor = `#${rgb.hex(action.payload.rgb)}`;
         return {...state, hexColor };
       }
       default:
