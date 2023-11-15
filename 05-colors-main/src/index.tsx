@@ -5,7 +5,8 @@ import Application from './components/application';
 import { makeServer } from './api';
 
 import './index.css';
-import { ColorProvider } from './contexts/colorContext';
+// import { ColorProvider } from './contexts/colorContext';
+import { ColorProvider } from './contexts/context';
 
 const environment = process.env.NODE_ENV;
 makeServer({ environment });
